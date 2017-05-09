@@ -1,0 +1,27 @@
+{
+  "name": "pacote",
+  "version": "1.0.0",
+  "description": "pacote json criacao",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brucoletinha/cefet-web-geiser.git"
+  },
+  "author": "Bruno Coletinha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brucoletinha/cefet-web-geiser/issues"
+  },
+  "homepage": "https://github.com/brucoletinha/cefet-web-geiser#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "hbs": "^4.0.1",
+    "underscore": "^1.8.3"
+  }
+}
