@@ -2,6 +2,7 @@ var express = require('express'),
     app = express();
 let fs = require('fs');
 let http = require('http');
+let _ = require('underscore');
 
 // carregar "banco de dados" (data/jogadores.json e data/jogosPorJogador.json)
 // você pode colocar o conteúdo dos arquivos json no objeto "db" logo abaixo
@@ -30,10 +31,33 @@ app.get('/', function(request, response) {
 // jogador, usando os dados do banco de dados "data/jogadores.json" e
 // "data/jogosPorJogador.json", assim como alguns campos calculados
 // dica: o handler desta função pode chegar a ter umas 15 linhas de código
+app.get('/jogador/:id', function(request,response){
+	let player = _.find(db.players.players, function(x){
+		return x.steamid === request.params.id;
+	});
 
+let joguim = db.gamesplayers[request.params.id];
+
+joguim.umdiaeujogo = _.where(joguim.games, {playtime_forever: 0}).length;
+
+joguim.games = _.sortBy(joguim.games, function(x) {
+	let negativo = x.playtime_forever*(-1);
+    return negativo;
+});
+
+joguim.games = _.head(joguim.games,5);
+
+joguim.games = _.map(joguim.games, function(x) {
+    x.playtime_forever = Math.round(x.playtime_forever/60);
+    return x;
+});
+
+response.render('jogador', { player: player, jogos: joguim, favorite: joguim.games[0] });
+
+});
 
 // EXERCÍCIO 1
-app.use(express.static('/home/aluno/Área de Trabalho/cefet-web-geiser/client'));
+app.use(express.static('C:/Users/Bruno/cefet-web-geiser/client'));
 // configurar para servir os arquivos estáticos da pasta "client"
 // dica: 1 linha de código
 
